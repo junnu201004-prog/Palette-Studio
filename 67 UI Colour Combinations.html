@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>54 UI Colour Combinations</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--tx:#0f172a;--mut:#64748b;--bd:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1020;--card:#151b2e;--tx:#e5e7eb;--mut:#94a3b8;--bd:#263049}}
+:root[data-theme="dark"]{--bg:#0b1020;--card:#151b2e;--tx:#e5e7eb;--mut:#94a3b8;--bd:#263049}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1000px;margin:0 auto;padding:20px 14px 40px}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--mut);font-size:.9rem;margin:0 0 18px}
+h2{font-size:1.05rem;margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.card h3{font-size:.9rem;margin:0;padding:10px 12px}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;font-size:.8rem;cursor:pointer;border:0;width:100%;font-family:inherit;text-align:left}
+.sw b{font-weight:600}
+.sw span{font-family:ui-monospace,Menlo,monospace;font-size:.75rem;opacity:.85}
+.sw i{font-style:normal;font-size:.6rem;opacity:.7;margin-left:4px}
+#t{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:20px;font-size:.8rem;opacity:0;transition:opacity .2s;pointer-events:none}
+</style>
+</head>
+<body>
+<main>
+<h1>67 UI Colour Combinations</h1>
+<p class="sub">Order: background · primary · accent · text. Tap a swatch to copy its hex. * = custom label.</p>
+<div id="app"></div>
+</main>
+<div id="t">Copied</div>
+<script>
+const D=[
+"Light & clean",
+["Arctic","F8FAFC Slate 50","3B82F6 Blue 500","14B8A6 Teal 500","0F172A Slate 900"],
+["Paper","FFFFFF White","18181B Zinc 900","6366F1 Indigo 500","27272A Zinc 800"],
+["Mint Fresh","F0FDFA Teal 50","0D9488 Teal 600","F59E0B Amber 500","134E4A Teal 900"],
+["Sky Light","F0F9FF Sky 50","0EA5E9 Sky 500","F472B6 Pink 400","082F49 Sky 950"],
+["Snow & Ink","FAFAFA Neutral 50","171717 Neutral 900","EF4444 Red 500","262626 Neutral 800"],
+["Pearl","F9F9FB Pearl White*","4338CA Indigo 700","06B6D4 Cyan 500","1E1B4B Indigo 950"],
+["Lemon Air","FEFCE8 Yellow 50","CA8A04 Yellow 600","0EA5E9 Sky 500","422006 Yellow 950"],
+["Peach Cloud","FFF7ED Orange 50","EA580C Orange 600","0D9488 Teal 600","431407 Orange 950"],
+["Rose Light","FFF1F2 Rose 50","E11D48 Rose 600","7C3AED Violet 600","4C0519 Rose 950"],
+["Lime Light","F7FEE7 Lime 50","65A30D Lime 600","0284C7 Sky 600","1A2E05 Lime 950"],
+["Ice Blue","EFF6FF Blue 50","1D4ED8 Blue 700","F97316 Orange 500","172554 Blue 950"],
+["Neutral Stone","FAFAF9 Stone 50","44403C Stone 700","D97706 Amber 600","1C1917 Stone 900"],
+"Dark mode",
+["Deep Space","020617 Slate 950","6366F1 Indigo 500","22D3EE Cyan 400","E2E8F0 Slate 200"],
+["Graphite","111827 Gray 900","10B981 Emerald 500","FBBF24 Amber 400","F3F4F6 Gray 100"],
+["Noir Rose","0F0A0C Dark Rosewood*","F43F5E Rose 500","FDA4AF Rose 300","FFF1F2 Rose 50"],
+["Ink Blue","0B132B Ink Navy*","5BC0BE Teal Blue*","F4D35E Saffron*","F8F9FA Ghost White*"],
+["Charcoal Violet","18181B Zinc 900","A78BFA Violet 400","F472B6 Pink 400","FAFAFA Zinc 50"],
+["Obsidian Gold","0A0A0A Neutral 950","EAB308 Yellow 500","FDE68A Amber 200","FAFAF9 Stone 50"],
+["Dark Ocean","06202B Deep Teal Navy*","38BDF8 Sky 400","34D399 Emerald 400","E0F2FE Sky 100"],
+["Night Forest","0A1F14 Forest Night*","4ADE80 Green 400","FACC15 Yellow 400","F0FDF4 Green 50"],
+["Midnight Orange","101010 Near Black*","FB923C Orange 400","38BDF8 Sky 400","F5F5F5 Neutral 100"],
+["Dark Berry","1E1033 Deep Grape*","D946EF Fuchsia 500","22D3EE Cyan 400","FAE8FF Fuchsia 100"],
+["Slate Night","0F172A Slate 900","38BDF8 Sky 400","A3E635 Lime 400","F1F5F9 Slate 100"],
+["Warm Dark","1C1917 Stone 900","F97316 Orange 500","FCD34D Amber 300","FAFAF9 Stone 50"],
+"Pastel & soft",
+["Cotton Candy","FDF2F8 Pink 50","F9A8D4 Pink 300","A5B4FC Indigo 300","4A044E Fuchsia 950"],
+["Baby Blue","EFF6FF Blue 50","93C5FD Blue 300","FCA5A5 Red 300","1E3A8A Blue 900"],
+["Sage Soft","F4F7F2 Sage Mist*","8FB996 Sage Green*","F2C6A0 Apricot*","2D3B2D Dark Fern*"],
+["Lilac Dream","F5F3FF Violet 50","C4B5FD Violet 300","FDBA74 Orange 300","3B0764 Purple 950"],
+["Peachy Keen","FFF5EE Seashell*","FDBA9B Peach*","9AD1D4 Aqua Mist*","5C3D2E Cocoa*"],
+["Butter Mint","FFFBEB Amber 50","FDE68A Amber 200","99F6E4 Teal 200","451A03 Amber 950"],
+["Powder Rose","FFF0F3 Blush*","FFB3C1 Pink Rose*","B8C0FF Periwinkle*","590D22 Burgundy*"],
+["Seafoam","ECFEFF Cyan 50","67E8F9 Cyan 300","FDA4AF Rose 300","164E63 Cyan 900"],
+"Earthy & natural",
+["Terracotta","FAF0E6 Linen*","C2410C Orange 700","4D7C0F Lime 700","3B1F0E Dark Brown*"],
+["Olive Grove","F6F4E8 Parchment*","606C38 Olive*","DDA15E Tan*","283618 Dark Olive*"],
+["Desert Dusk","FDF4E7 Sand Cream*","BC6C25 Copper*","606C38 Olive*","432818 Dark Umber*"],
+["Clay & Moss","F2E9E4 Beige Rose*","9A8C98 Dusty Mauve*","4A4E69 Slate Purple*","22223B Midnight Plum*"],
+["Autumn","FFF8F0 Warm Ivory*","B45309 Amber 700","9F1239 Rose 800","292524 Stone 800"],
+["Driftwood","F5EFE6 Oatmeal*","8D6E63 Driftwood*","5F7A61 Sage*","3E2723 Dark Cocoa*"],
+["Pine & Birch","F8F9F4 Birch White*","1B4332 Pine Green*","95D5B2 Mint*","081C15 Deep Pine*"],
+["Rust & Teal","FBF5EF Cream*","9C4221 Rust*","2C7A7B Deep Teal*","2D1B12 Dark Brown*"],
+"Bold & vibrant",
+["Electric Pop","FFFFFF White","7C3AED Violet 600","FACC15 Yellow 400","111111 Near Black*"],
+["Hot Coral","FFF7F5 Coral Cloud*","FF5A5F Coral*","00A699 Persian Green*","222222 Charcoal*"],
+["Neon Night","0D0221 Deep Indigo*","FF2E97 Neon Pink*","00F0FF Neon Cyan*","F8F8FF Ghost White*"],
+["Tropical","ECFDF5 Emerald 50","059669 Emerald 600","F43F5E Rose 500","064E3B Emerald 900"],
+["Citrus Burst","FFFDF2 Citrus Cream*","F97316 Orange 500","84CC16 Lime 500","292524 Stone 800"],
+["Royal Punch","FAF5FF Purple 50","6D28D9 Violet 700","EC4899 Pink 500","2E1065 Violet 950"],
+["Retro Arcade","1A1A2E Midnight Navy*","E94560 Crimson Pink*","0F3460 Navy Blue*","EAEAEA Light Gray*"],
+["Sunrise","FFF7ED Orange 50","F43F5E Rose 500","F59E0B Amber 500","4C0519 Rose 950"],
+"Corporate & professional",
+["Trust Blue","F8FAFC Slate 50","1E40AF Blue 800","0EA5E9 Sky 500","0F172A Slate 900"],
+["Finance Green","F6FBF8 Mint White*","047857 Emerald 700","1D4ED8 Blue 700","052E16 Green 950"],
+["Law & Order","F5F5F4 Stone 100","1E293B Slate 800","B45309 Amber 700","0C0A09 Stone 950"],
+["Healthcare","F0FDFA Teal 50","0F766E Teal 700","38BDF8 Sky 400","134E4A Teal 900"],
+["Luxury","0C0C0C Rich Black*","C9A227 Gold*","F5F5F0 Ivory*","EDEDED Light Gray*"],
+["Startup","FFFFFF White","4F46E5 Indigo 600","10B981 Emerald 500","111827 Gray 900"],
+"Luxury",
+["Black & Gold","0C0C0C Rich Black*","C9A227 Gold*","F5F5F0 Ivory*","EDEDED Light Gray*"],
+["Champagne Noir","111111 Near Black*","D4AF37 Metallic Gold*","F7E7CE Champagne*","FAFAF9 Stone 50"],
+["Emerald Opulence","022C22 Emerald 950","D4AF37 Metallic Gold*","F5E6C8 Cream Gold*","ECFDF5 Emerald 50"],
+["Ivory & Bronze","FAF7F0 Ivory*","8C6A3F Bronze*","1C1917 Stone 900","292524 Stone 800"],
+["Burgundy Velvet","1A0A10 Black Cherry*","7F1D1D Red 900","D4AF37 Metallic Gold*","FFF1F2 Rose 50"],
+["Platinum","F4F4F5 Zinc 100","52525B Zinc 600","C0C0C0 Silver*","18181B Zinc 900"],
+["Rose Gold","FFF5F3 Blush Ivory*","B76E79 Rose Gold*","E8C4B8 Pale Rose Gold*","2B1B1B Dark Mahogany*"],
+"Royal",
+["Royal Purple & Gold","12062B Imperial Night*","5B21B6 Violet 800","D4AF37 Metallic Gold*","F5F3FF Violet 50"],
+["Royal Blue & Gold","0B1437 Midnight Royal*","1E40AF Blue 800","FBBF24 Amber 400","EFF6FF Blue 50"],
+["Crimson Crown","1C0A0E Dark Garnet*","9F1239 Rose 800","D4AF37 Metallic Gold*","FFF7ED Orange 50"],
+["Sapphire Court","F8FAFC Slate 50","1E3A8A Blue 900","C9A227 Gold*","0F172A Slate 900"],
+["Amethyst Palace","FAF5FF Purple 50","6B21A8 Purple 800","E9D5FF Purple 200","3B0764 Purple 950"],
+["Imperial Teal & Gold","042F2E Teal 950","0F766E Teal 700","D4AF37 Metallic Gold*","F0FDFA Teal 50"]
+];
+const roles=["BG","Primary","Accent","Text"];
+function fg(h){const n=parseInt(h,16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>140?"#111":"#fff"}
+const app=document.getElementById("app");let n=0,grid;
+D.forEach(x=>{
+ if(typeof x==="string"){const h=document.createElement("h2");h.textContent=x;app.appendChild(h);grid=document.createElement("div");grid.className="grid";app.appendChild(grid);return}
+ n++;const c=document.createElement("div");c.className="card";
+ c.innerHTML="<h3>"+n+". "+x[0]+"</h3>";
+ x.slice(1).forEach((s,i)=>{
+  const k=s.indexOf(" "),hex=s.slice(0,k),nm=s.slice(k+1);
+  const b=document.createElement("button");b.className="sw";b.style.background="#"+hex;b.style.color=fg(hex);
+  b.innerHTML="<b>"+nm+"<i>"+roles[i]+"</i></b><span>#"+hex+"</span>";
+  b.onclick=()=>{try{navigator.clipboard.writeText("#"+hex)}catch(e){}
+   const t=document.getElementById("t");t.textContent="Copied #"+hex;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1200)};
+  c.appendChild(b)});
+ grid.appendChild(c)});
+</script>
+</body>
+</html>
