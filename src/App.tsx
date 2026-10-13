@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { PALETTES, CATEGORIES } from './data/palettes';
-import { Palette, CustomColors, DeviceMode, ColorRole, ToastMessage } from './types/palette';
+import { Palette, CustomColors, DeviceMode, ColorRole, ToastMessage, TemplateId } from './types/palette';
 import { safeHex } from './utils/colorUtils';
 import { PaletteSidebar } from './components/Sidebar/PaletteSidebar';
 import { PreviewToolbar } from './components/Preview/PreviewToolbar';
+import { TemplateSelector } from './components/Preview/TemplateSelector';
 import { WebsitePreview } from './components/Preview/WebsitePreview';
 import { CustomColorEditor } from './components/Customizer/CustomColorEditor';
 import { Toast } from './components/Common/Toast';
@@ -27,8 +28,9 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  // Preview Mode
+  // Preview Mode & Active Template
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
+  const [activeTemplateId, setActiveTemplateId] = useState<TemplateId>('saas');
 
   // Modals & Drawers
   const [isCustomizerOpen, setIsCustomizerOpen] = useState<boolean>(false);
@@ -255,11 +257,18 @@ export function App() {
             onColorChange={handleColorChange}
           />
 
+          {/* Preview Templates Switcher Gallery */}
+          <TemplateSelector
+            activeTemplateId={activeTemplateId}
+            onSelectTemplate={setActiveTemplateId}
+          />
+
           {/* Website Preview Viewport */}
           <div className="flex-1 overflow-hidden relative">
             <WebsitePreview
               customColors={customColors}
               deviceMode={deviceMode}
+              activeTemplateId={activeTemplateId}
             />
           </div>
         </main>

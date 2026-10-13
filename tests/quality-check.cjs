@@ -243,4 +243,53 @@ for (const p of parsedPalettes) {
 }
 console.log('✓ PASS: All 67 palettes verified for dynamic CSS variables generation.');
 
+// 8. Verify all 8 Preview Templates exist, export correctly, and map palette variables
+const templatesTsPath = path.join(__dirname, '..', 'src', 'data', 'templates.ts');
+const templatesTsContent = fs.readFileSync(templatesTsPath, 'utf8');
+
+const expectedTemplateIds = [
+  'saas',
+  'ecommerce',
+  'restaurant',
+  'portfolio',
+  'corporate',
+  'blog',
+  'dashboard',
+  'travel',
+];
+
+for (const tplId of expectedTemplateIds) {
+  if (!templatesTsContent.includes(`id: '${tplId}'`)) {
+    console.error(`FAIL: Template definition missing for '${tplId}' in templates.ts`);
+    process.exit(1);
+  }
+}
+console.log(`[CHECK 8] All ${expectedTemplateIds.length} preview template definitions exist in templates.ts.`);
+
+const templateFiles = [
+  { id: 'saas', file: 'SaaSTemplate.tsx' },
+  { id: 'ecommerce', file: 'EcommerceTemplate.tsx' },
+  { id: 'restaurant', file: 'RestaurantTemplate.tsx' },
+  { id: 'portfolio', file: 'PortfolioTemplate.tsx' },
+  { id: 'corporate', file: 'CorporateTemplate.tsx' },
+  { id: 'blog', file: 'BlogTemplate.tsx' },
+  { id: 'dashboard', file: 'DashboardTemplate.tsx' },
+  { id: 'travel', file: 'TravelTemplate.tsx' },
+];
+
+for (const t of templateFiles) {
+  const filePath = path.join(__dirname, '..', 'src', 'components', 'Preview', 'Templates', t.file);
+  if (!fs.existsSync(filePath)) {
+    console.error(`FAIL: Template component file missing: ${filePath}`);
+    process.exit(1);
+  }
+  const content = fs.readFileSync(filePath, 'utf8');
+  if (!content.includes('--preview-primary') || !content.includes('--preview-accent')) {
+    console.error(`FAIL: Template ${t.file} missing live preview CSS variable bindings`);
+    process.exit(1);
+  }
+}
+console.log('✓ PASS: All 8 template component files exist and bind palette CSS variables.');
+
 console.log('\n=== ALL QUALITY CHECKS PASSED SUCCESSFULLY ===');
+

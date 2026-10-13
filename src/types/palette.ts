@@ -35,3 +35,20 @@ export interface ToastMessage {
   type?: 'success' | 'info' | 'error';
 }
 
+export type TemplateId =
+  | 'saas'
+  | 'ecommerce'
+  | 'restaurant'
+  | 'portfolio'
+  | 'corporate'
+  | 'blog'
+  | 'dashboard'
+  | 'travel';
+
+export interface PreviewTemplate {
+  id: TemplateId;
+  name: string;
+  tagline: string;
+  category: string;
+  url: string;
+}
