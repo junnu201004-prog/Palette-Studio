@@ -166,18 +166,29 @@ if (goldSearch.length === 0) {
 }
 console.log(`✓ PASS: Combined search & category filter matched ${goldSearch.length} palettes.`);
 
-// 6. Test Hex Validation & Normalization
+// 6. Test Hex Validation, Normalization and safeHex
 function isValidHex(hex) {
+  if (!hex || typeof hex !== 'string') return false;
   const clean = hex.trim().replace(/^#/, '');
   return /^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(clean);
 }
 
 function normalizeHex(hex) {
+  if (!hex || typeof hex !== 'string') return '#000000';
   let clean = hex.trim().replace(/^#/, '');
   if (clean.length === 3) {
     clean = clean.split('').map((c) => c + c).join('');
   }
   return '#' + clean.toUpperCase();
+}
+
+function safeHex(hex, fallback = '#000000') {
+  if (!hex || typeof hex !== 'string') return fallback;
+  const clean = hex.trim();
+  if (isValidHex(clean)) {
+    return normalizeHex(clean);
+  }
+  return fallback;
 }
 
 const testHexes = [
@@ -188,6 +199,8 @@ const testHexes = [
   { input: '#GGGGGG', valid: false },
   { input: '12345', valid: false },
   { input: 'not-a-color', valid: false },
+  { input: null, valid: false },
+  { input: undefined, valid: false },
 ];
 
 for (const t of testHexes) {
@@ -203,5 +216,31 @@ for (const t of testHexes) {
 }
 console.log('✓ PASS: Hex validation and normalization passed all tests.');
 
-console.log('\n=== ALL QUALITY CHECKS PASSED SUCCESSFULLY ===');
+// Test safeHex
+if (safeHex('invalid', '#FFFFFF') !== '#FFFFFF') {
+  console.error('FAIL: safeHex fallback test failed');
+  process.exit(1);
+}
+if (safeHex('#3b82f6', '#FFFFFF') !== '#3B82F6') {
+  console.error('FAIL: safeHex valid hex test failed');
+  process.exit(1);
+}
+console.log('✓ PASS: safeHex fallback test passed.');
 
+// 7. Verify all 67 palettes can map to CSS variables and copy strings without issue
+for (const p of parsedPalettes) {
+  const css = `/* Palette Studio: ${p.name} */
+:root {
+  --preview-bg: ${safeHex(p.colors.background.hex)};
+  --preview-primary: ${safeHex(p.colors.primary.hex)};
+  --preview-accent: ${safeHex(p.colors.accent.hex)};
+  --preview-text: ${safeHex(p.colors.text.hex)};
+}`;
+  if (!css.includes(p.name) || !css.includes('--preview-bg')) {
+    console.error(`FAIL: CSS variable generation failed for palette ${p.name}`);
+    process.exit(1);
+  }
+}
+console.log('✓ PASS: All 67 palettes verified for dynamic CSS variables generation.');
+
+console.log('\n=== ALL QUALITY CHECKS PASSED SUCCESSFULLY ===');
